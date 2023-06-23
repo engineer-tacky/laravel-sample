@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\Admin\BookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,11 @@ Route::get('/', function () {
 
 Route::get('messages', [MessageController::class, 'index']);
 Route::post('messages', [MessageController::class, 'store']);
+
+Route::prefix('admin/books')
+  ->name('books.')
+  ->controller(BookController::class)
+  ->group(function () {
+    Route::get('', 'index')->name('index');
+    Route::get('{id}', 'show')->whereNumber('id')->name('show');
+});
