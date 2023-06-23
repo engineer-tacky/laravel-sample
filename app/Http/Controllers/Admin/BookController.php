@@ -46,7 +46,7 @@ class BookController extends Controller
         $book->save();
 
         return redirect()
-          ->route('books.index')
+          ->route('book.index')
           ->with('message', $book->title . 'を追加しました。');
     }
 }
