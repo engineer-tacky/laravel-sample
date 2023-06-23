@@ -16,7 +16,7 @@
         </ul>
       </div>
     @endif
-    <form action="{{route('books.store')}}" method="POST">
+    <form action="{{route('book.store')}}" method="POST">
       @csrf
       <div>
         <label>カテゴリ</label>
