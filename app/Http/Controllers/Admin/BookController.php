@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\BookPostRequest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use App\Models\Book;
@@ -28,7 +28,7 @@ class BookController extends Controller
         return view('admin/book/create', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(BookPostRequest $request)
     {
         $book = new Book();
         $book->category_id = $request->category_id;
