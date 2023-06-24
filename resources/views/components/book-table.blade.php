@@ -7,7 +7,11 @@
   @foreach ($books as $book)
     <tr @if ($loop->even) style="background:#E0E0E0" @endif>
       <td>{{ $book->category->title }}</td>
-      <td>{{ $book->title }}</td>
+      <td>
+        <a href="{{ route('book.show', $book) }}">
+          {{ $book->title }}
+        </a>
+      </td>
       <td>{{ $book->price }}</td>
     </tr>
   @endforeach
