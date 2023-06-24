@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BookPostRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
 
@@ -33,8 +35,9 @@ class BookController extends Controller
     public function create(): View
     {
         $categories = Category::all();
+        $authors = Author::all();
 
-        return view('admin/book/create', compact('categories'));
+        return view('admin/book/create', compact('categories', 'authors'));
     }
 
     public function store(BookPostRequest $request): RedirectResponse
@@ -43,7 +46,11 @@ class BookController extends Controller
         $book->category_id = $request->category_id;
         $book->title = $request->title;
         $book->price = $request->price;
-        $book->save();
+
+        DB::transaction(function () use ($book, $request) {
+          $book->save();
+          $book->authors()->attach($request->author_ids);
+        });
 
         return redirect()
           ->route('book.index')
